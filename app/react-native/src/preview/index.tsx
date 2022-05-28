@@ -42,6 +42,10 @@ export interface StorybookRootProps {
    * Controllable themes.
    */
   theme?: typeof theme;
+  /**
+   * Footer component below the Navigation bar.
+   */
+  renderFooter?: () => JSX.Element;
 }
 
 export default class Preview {
@@ -160,6 +164,7 @@ More info: https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#react
                 tabOpen={params.tabOpen}
                 shouldDisableKeyboardAvoidingView={params.shouldDisableKeyboardAvoidingView}
                 keyboardAvoidingViewVerticalOffset={params.keyboardAvoidingViewVerticalOffset}
+                renderFooter={this.props.renderFooter}
               />
             </ThemeProvider>
           );

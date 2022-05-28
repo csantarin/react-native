@@ -45,6 +45,7 @@ interface OnDeviceUIProps {
   isUIHidden?: boolean;
   shouldDisableKeyboardAvoidingView?: boolean;
   keyboardAvoidingViewVerticalOffset?: number;
+  renderFooter?: () => JSX.Element;
 }
 
 interface OnDeviceUIState {
@@ -121,6 +122,7 @@ export default class OnDeviceUI extends PureComponent<OnDeviceUIProps, OnDeviceU
       isUIHidden,
       shouldDisableKeyboardAvoidingView,
       keyboardAvoidingViewVerticalOffset,
+      renderFooter,
     } = this.props;
 
     const { tabOpen, slideBetweenAnimation, previewWidth, previewHeight } = this.state;
@@ -169,6 +171,7 @@ export default class OnDeviceUI extends PureComponent<OnDeviceUIProps, OnDeviceU
             onChangeTab={this.handleToggleTab}
             initialUiVisible={!isUIHidden}
           />
+          {renderFooter ? renderFooter() : null}
         </KeyboardAvoidingView>
       </SafeAreaView>
     );
