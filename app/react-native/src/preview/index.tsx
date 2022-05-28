@@ -37,6 +37,17 @@ export type Params = {
   keyboardAvoidingViewVerticalOffset: number;
 } & { theme: typeof theme };
 
+export interface StorybookRootProps {
+  /**
+   * Controllable themes.
+   */
+  theme?: typeof theme;
+  /**
+   * Footer component below the Navigation bar.
+   */
+  renderFooter?: () => JSX.Element;
+}
+
 export default class Preview {
   _clientApi: ClientApi;
 
@@ -138,11 +149,11 @@ More info: https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#react
 
     addons.loadAddons(this._clientApi);
 
-    const appliedTheme = { ...theme, ...params.theme };
-
     // react-native hot module loader must take in a Class - https://github.com/facebook/react-native/issues/10991
     return class StorybookRoot extends PureComponent {
       render() {
+        const appliedTheme = { ...theme, ...params.theme, ...this.props.theme };
+
         if (onDeviceUI) {
           return (
             <ThemeProvider theme={appliedTheme}>
@@ -153,6 +164,7 @@ More info: https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#react
                 tabOpen={params.tabOpen}
                 shouldDisableKeyboardAvoidingView={params.shouldDisableKeyboardAvoidingView}
                 keyboardAvoidingViewVerticalOffset={params.keyboardAvoidingViewVerticalOffset}
+                renderFooter={this.props.renderFooter}
               />
             </ThemeProvider>
           );
